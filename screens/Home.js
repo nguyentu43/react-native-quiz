@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { Text, SafeAreaView, ScrollView } from "react-native";
 
 import RoundedPanel from "../components/RoundedPanel";
 import RoundedButton from "../components/RoundedButton";

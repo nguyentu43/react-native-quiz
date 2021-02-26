@@ -57,7 +57,6 @@ export default class LearningVoca extends React.Component{
     handleAdjustment = () => {
         let {adjust, wordList} = this.state;
 
-        //prev state adjust
         if(!adjust){
 
             wordList = [...this.tmpWordList];
