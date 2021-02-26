@@ -10,5 +10,3 @@
 
 #### Learn new vocabulary
 ![OV](https://github.com/nguyentu43/react-native-quiz/raw/master/screenshot03.jpg)
-
-![OV](https://github.com/nguyentu43/react-native-quiz/raw/master/screenshot04.jpg)
