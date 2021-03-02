@@ -183,13 +183,26 @@ export default class ResponseQuestion extends React.Component{
         this.setState({selectedQuestionIndex: index, showModal: false});
     }
 
+    pressSubmit = () => {
+
+        Alert.alert("Nộp bài", "Bạn có muốn nộp bài?", [
+            {
+                text: "Có",
+                onPress: () => this.submitResponse()
+            },
+            {
+                text: "Không"
+            }
+        ], { cancelable: true });
+
+    }
+
     submitResponse = async () => {
-        const numsOfSection = this.calculate();
+        const numsOfSection = await this.calculate();
         const totalOfSection = [50, 40, 50];
         const {test} = this.props.route.params;
 
         try{
-
             const result = await ExecuteQuery(`
                 insert into results(date, sections, test_id, responses) values(?, ?, ?, ?)
             `, [getDateNow(), JSON.stringify(numsOfSection), test, JSON.stringify(this.responses)
@@ -220,13 +233,13 @@ export default class ResponseQuestion extends React.Component{
     }
 
     calculate = async () => {
-        const section = [0,0,0];
+        const section = [0, 0, 0];
 
         const key = 'ITP_WRONG_QUESTION_LIST';
 
         const list = JSON.parse((await AsyncStorage.getItem(key))) || [];
         const set = new Set(list);
-        
+
         for(let i = 1; i<=3; i++)
         {
             this.questionData.forEach((question, questionIndex) => {
@@ -281,7 +294,7 @@ export default class ResponseQuestion extends React.Component{
         
         if(this.pinnedQuestionList.has(id)){
             this.pinnedQuestionList.delete(id);
-            ToastAndroid.show('Bạn đã gỏ đánh dấu câu này', ToastAndroid.SHORT);
+            ToastAndroid.show('Bạn đã gỡ bỏ đánh dấu câu này', ToastAndroid.SHORT);
         }
         else{
             this.pinnedQuestionList.add(id);
@@ -307,7 +320,7 @@ export default class ResponseQuestion extends React.Component{
                 <RoundedButton iconName="arrow-back-outline" style={{backgroundColor:"#004080"}} onPress={this.prevQuestion}/>
                 <RoundedButton iconName="reader-outline" style={{backgroundColor:"#46c8f9"}} onPress={this.toggleModal} />
                 <RoundedButton iconName="star-outline" style={{backgroundColor}} onPress={this.toggleQuestion} />
-                {test && <RoundedButton title="Nộp bài" style={{backgroundColor:"#00ce67"}} onPress={this.submitResponse} />}
+                {test && <RoundedButton title="Nộp bài" style={{backgroundColor:"#00ce67"}} onPress={this.pressSubmit} />}
                 <RoundedButton iconName="arrow-forward-outline" style={{backgroundColor:"#004080"}} onPress={this.nextQuestion}/>
             </View>
         );
